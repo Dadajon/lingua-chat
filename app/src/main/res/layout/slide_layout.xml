@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/slide_image"
@@ -9,20 +10,18 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/eat_icon" />
+        android:layout_marginTop="100dp"
+        android:src="@drawable/first_icon" />
 
     <TextView
         android:id="@+id/slide_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slide_image"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/slide_desc"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="251dp"
+        android:layout_marginBottom="40dp"
         android:text="HEADING"
-        android:textColor="@color/white"
+        android:textColor="@color/md_text"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -35,7 +34,7 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="152dp"
+        android:layout_marginBottom="140dp"
         android:text="@string/lorem"
         android:textAlignment="center"
         android:textColor="@color/colorTransparentWhite"/>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background"
-    tools:context=".SplashActivity">
+    tools:context=".SplashActivity"
+    android:background="@color/white">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/slideViewPager"
@@ -14,7 +14,6 @@
         android:layout_marginBottom="60dp"/>
 
     <LinearLayout
-        android:background="@drawable/btn_radius"
         android:id="@+id/dotsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
