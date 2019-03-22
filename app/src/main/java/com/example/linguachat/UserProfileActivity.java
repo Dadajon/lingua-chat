@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -84,7 +85,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Log.d("AUTH", "USER LOGGED OUT!");
-                                Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+                                Intent intent = new Intent(UserProfileActivity.this, SignInActivity.class);
                                 UserProfileActivity.this.startActivity(intent);
                             }
                         });
@@ -100,7 +101,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Log.d("AUTH", "USER WAS DELETED!");
-                                Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+                                Intent intent = new Intent(UserProfileActivity.this, SignInActivity.class);
                                 UserProfileActivity.this.startActivity(intent);
                             }
                         });

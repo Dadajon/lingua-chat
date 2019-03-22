@@ -13,6 +13,9 @@
     <string name="profile_name">user name</string>
     <string name="profile_email">user email</string>
     <string name="profile">profile</string>
+    <string name="sign_in_activity">Sign In Activity</string>
+    <string name="lorem">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus similique excepturi voluptates aliquam dicta eveniet non itaque minima in fugiat explicabo voluptatibus ea soluta incidunt mollitia, sunt error qui veniam.</string>
+    <string name="next">Next</string>
 
 
 </resources>
