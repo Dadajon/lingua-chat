@@ -1,7 +1,6 @@
 package com.example.linguachat;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,44 +10,61 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
+
+    private FirebaseAuth mAuth;
 
     private ViewPager mSlideViewPager;
     private LinearLayout mDotLayout;
     private SliderAdapter sliderAdapter;
     private TextView[] mDots;
-    private Button nextBtn;
-    private int mCurrentPage, btnPressed;
+    private Button nextBtn, getStartedBtn;
+    private int mCurrentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        nextBtn = findViewById(R.id.nextBtn);
-        mSlideViewPager = findViewById(R.id.slideViewPager);
-        mDotLayout = findViewById(R.id.dotsLayout);
-        sliderAdapter = new SliderAdapter(this);
-        mSlideViewPager.setAdapter(sliderAdapter);
+        mAuth = FirebaseAuth.getInstance();
 
-        addDotsIndicator(0);
-        mSlideViewPager.addOnPageChangeListener(viewListener);
+        if (mAuth.getCurrentUser() != null) {
+            //user has already signed in
+            Log.d("SPLASH_ACTIVITY AUTH", mAuth.getCurrentUser().getEmail());
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick mCurrentPage : " + btnPressed);
-                btnPressed++;
-                mSlideViewPager.setCurrentItem(mCurrentPage + 1);
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            SplashActivity.this.startActivity(intent);
+        } else {
+            //If there is no user
+            nextBtn = findViewById(R.id.nextBtn);
+            getStartedBtn = findViewById(R.id.getStartedBtn);
+            mSlideViewPager = findViewById(R.id.slideViewPager);
+            mDotLayout = findViewById(R.id.dotsLayout);
+            sliderAdapter = new SliderAdapter(this);
+            mSlideViewPager.setAdapter(sliderAdapter);
 
-                if (btnPressed > 2){
+            addDotsIndicator(0);
+            mSlideViewPager.addOnPageChangeListener(viewListener);
+
+            nextBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick mCurrentPage : " + mCurrentPage);
+                    mSlideViewPager.setCurrentItem(mCurrentPage + 1);
+                }
+            });
+
+            getStartedBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
                     SplashActivity.this.startActivity(intent);
                 }
-            }
-        });
+            });
+        }
     }
 
     public void addDotsIndicator(int position) {
@@ -87,18 +103,30 @@ public class SplashActivity extends AppCompatActivity {
                 nextBtn.setWidth(200);
                 nextBtn.setTextColor(getApplication().getResources().getColor(R.color.md_text));
                 nextBtn.setBackgroundResource(R.drawable.btn_radius);
+                nextBtn.setVisibility(View.VISIBLE);
+
+                getStartedBtn.setEnabled(false);
+                getStartedBtn.setVisibility(View.INVISIBLE);
             } else if (i == mDots.length - 1) {
-                nextBtn.setEnabled(true);
-                nextBtn.setText("Get Started");
-                nextBtn.setWidth(350);
-                nextBtn.setTextColor(getApplication().getResources().getColor(R.color.white));
-                nextBtn.setBackgroundResource(R.drawable.btn_get_started);
+                nextBtn.setEnabled(false);
+                nextBtn.setVisibility(View.INVISIBLE);
+
+                getStartedBtn.setEnabled(true);
+                getStartedBtn.setText("Get Started");
+                getStartedBtn.setWidth(350);
+                getStartedBtn.setTextColor(getApplication().getResources().getColor(R.color.white));
+                getStartedBtn.setBackgroundResource(R.drawable.btn_get_started);
+                getStartedBtn.setVisibility(View.VISIBLE);
             } else {
                 nextBtn.setEnabled(true);
                 nextBtn.setText("Next");
                 nextBtn.setWidth(200);
                 nextBtn.setTextColor(getApplication().getResources().getColor(R.color.md_text));
                 nextBtn.setBackgroundResource(R.drawable.btn_radius);
+                nextBtn.setVisibility(View.VISIBLE);
+
+                getStartedBtn.setEnabled(false);
+                getStartedBtn.setVisibility(View.INVISIBLE);
             }
         }
 
