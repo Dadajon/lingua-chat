@@ -8,10 +8,8 @@
         android:id="@+id/categories_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        app:msrv_gravity="start"
-        app:msrv_ms_per_inch="@dimen/normal_speed"
+        app:msrv_gravity="center"
+        app:msrv_ms_per_inch="50"
         app:msrv_snap_count="1"
-        android:scrollIndicators="right"
-        android:saveEnabled="true"/>
+        android:scrollIndicators="right"/>
 </RelativeLayout>

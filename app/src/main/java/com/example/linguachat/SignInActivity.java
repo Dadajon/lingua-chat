@@ -34,9 +34,11 @@ public class SignInActivity extends AppCompatActivity {
         } else {
             // Choose authentication providers
             List<AuthUI.IdpConfig> providers = Arrays.asList(
+                    new AuthUI.IdpConfig.PhoneBuilder().build(),
                     new AuthUI.IdpConfig.EmailBuilder().build(),
                     new AuthUI.IdpConfig.GoogleBuilder().build(),
                     new AuthUI.IdpConfig.FacebookBuilder().build());
+
 
             startActivityForResult(
                     AuthUI.getInstance()

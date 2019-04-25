@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setTabTwoIcon(R.drawable.ic_widgets_white_24dp);
         tabLayout.setTabThreeIcon(R.drawable.ic_verified_user_white_24dp);
         tabLayout.setTabFourIcon(R.drawable.ic_account_circle_white_24dp);
+
+        tabLayout.setTabFourOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Clicked on Tab4", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     //we need the outState to save the position
