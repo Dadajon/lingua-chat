@@ -27,6 +27,8 @@
     <string name="level">Level</string>
     <string name="category_image">category image</string>
     <string name="card_number">1/11</string>
+    <string name="sections">Sections</string>
+    <string name="section_id">1 :</string>
 
 
 </resources>

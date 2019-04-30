@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -44,6 +45,7 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(mCtx,"ID : "+model.getId(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
                 intent.putExtra("category_bg", model.getCard_bg());
                 intent.putExtra("category_desc", model.getCard_desc());
