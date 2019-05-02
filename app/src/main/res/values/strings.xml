@@ -29,6 +29,9 @@
     <string name="card_number">1/11</string>
     <string name="sections">Sections</string>
     <string name="section_id">1 :</string>
+    <string name="logout">Logout</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

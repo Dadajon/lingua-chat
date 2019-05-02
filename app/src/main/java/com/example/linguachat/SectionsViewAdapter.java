@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,8 +25,8 @@ public class SectionsViewAdapter extends FirestoreRecyclerAdapter<Sections, Sect
 
     @Override
     protected void onBindViewHolder(@NonNull SectionsHolder holder, int position, @NonNull final Sections model) {
-        if (position == 0) {
-            holder.sectionIcon.setImageResource(R.drawable.ic_play_circle_filled_black_24dp);
+        if (model.isSection_completed()) {
+            holder.sectionIcon.setImageResource(R.drawable.ic_check_circle_white_24dp);
         } else {
             holder.sectionIcon.setImageResource(R.drawable.ic_lock_black_24dp);
         }
@@ -35,14 +34,18 @@ public class SectionsViewAdapter extends FirestoreRecyclerAdapter<Sections, Sect
         holder.sectionTitle.setText(model.getSection_title());
         String sectionNumber = model.getSection_id() + " : ";
         holder.sectionId.setText(sectionNumber);
-        holder.sectionLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mCtx, SectionsActivity.class);
-                intent.putExtra("category_title", model.getSection_title());
-                mCtx.startActivity(intent);
-            }
-        });
+//        holder.sectionLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mCtx, SectionsActivity.class);
+//                intent.putExtra("section_title", model.getSection_title());
+//                intent.putExtra("section_is_visited", model.isSection_completed());
+//                intent.putExtra("section_id", model.getSection_id());
+//                mCtx.startActivity(intent);
+//            }
+//        });
+        holder.sectionLayout.setOnClickListener(new MyButtonListener(mCtx));
+
     }
 
     @NonNull

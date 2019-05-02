@@ -1,16 +1,11 @@
 package com.example.linguachat;
 
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -19,17 +14,20 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView;
+
 
 public class CategoriesInnerActivity extends AppCompatActivity {
-    private FirebaseFirestore db;
     private CollectionReference sectionsRef;
     private SectionsViewAdapter adapter;
 
-    NestedScrollView scrollView;
+    ScrollView scrollView;
     CardView cardView;
     ImageView category_bg;
     TextView category_title, category_desc;
+    MultiSnapRecyclerView multiSnapRecyclerView;
     private static final String TAG = "CategoriesInnerActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,7 @@ public class CategoriesInnerActivity extends AppCompatActivity {
     private void getIncomingIntent() {
         final Bundle bundle = getIntent().getExtras();
 
-        if (bundle != null){
+        if (bundle != null) {
             String categoryBg = bundle.getString("category_bg");
             String categoryDesc = bundle.getString("category_desc");
             String categoryLevel = bundle.getString("category_level");
@@ -52,9 +50,9 @@ public class CategoriesInnerActivity extends AppCompatActivity {
 
             setData(categoryBg, categoryDesc, categoryLevel, categoryTitle, categoryColor, categoryId);
 
-            switch (categoryId){
+            switch (categoryId) {
                 case 1:
-                    db = FirebaseFirestore.getInstance();
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
                     sectionsRef = db.collection("/Categories/Carl/Sections");
                     break;
                 case 2:
@@ -75,6 +73,7 @@ public class CategoriesInnerActivity extends AppCompatActivity {
         category_bg = findViewById(R.id.category_bg_image);
         category_title = findViewById(R.id.category_title);
         category_desc = findViewById(R.id.category_desc);
+        multiSnapRecyclerView = findViewById(R.id.categories_sections);
 
         scrollView.setBackgroundColor(categoryColor);
         cardView.setCardBackgroundColor(categoryColor);
@@ -97,6 +96,11 @@ public class CategoriesInnerActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         adapter.startListening();
     }
 

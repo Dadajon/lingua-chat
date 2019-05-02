@@ -17,8 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, CategoriesViewAdapter.CategoriesHolder> {
     private static final String TAG = "CategoriesViewAdapter";
@@ -42,10 +44,10 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
         holder.startBtn.setCardBackgroundColor(color);
         String pageNumber = model.getId()+"/11";
         holder.categoryNumber.setText(pageNumber);
+
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mCtx,"ID : "+model.getId(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
                 intent.putExtra("category_bg", model.getCard_bg());
                 intent.putExtra("category_desc", model.getCard_desc());
@@ -70,6 +72,12 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
                 mCtx.startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public void onChildChanged(@NonNull ChangeEventType type, @NonNull DocumentSnapshot snapshot, int newIndex, int oldIndex) {
+        super.onChildChanged(type, snapshot, newIndex, oldIndex);
     }
 
     @NonNull

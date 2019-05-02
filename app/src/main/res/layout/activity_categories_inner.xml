@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/category_inner_activity"
@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
             android:id="@+id/category_bg_card"
             android:layout_width="wrap_content"
@@ -55,8 +55,8 @@
         <com.takusemba.multisnaprecyclerview.MultiSnapRecyclerView
             android:id="@+id/categories_sections"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="600dp"
             android:layout_below="@id/category_desc"
             android:layout_marginTop="20dp"/>
     </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+</ScrollView>

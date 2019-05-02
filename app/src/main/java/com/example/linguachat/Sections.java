@@ -1,7 +1,7 @@
 package com.example.linguachat;
 
 public class Sections {
-    private String section_icon;
+    private boolean section_completed;
     private int section_id;
     private String section_title;
 
@@ -9,14 +9,14 @@ public class Sections {
         //empty constructor needed
     }
 
-    public Sections(String section_icon, int section_id, String section_title) {
-        this.section_icon = section_icon;
+    public Sections(boolean section_completed, int section_id, String section_title) {
+        this.section_completed = section_completed;
         this.section_id = section_id;
         this.section_title = section_title;
     }
 
-    public String getSection_icon() {
-        return section_icon;
+    public boolean isSection_completed() {
+        return section_completed;
     }
 
     public int getSection_id() {
