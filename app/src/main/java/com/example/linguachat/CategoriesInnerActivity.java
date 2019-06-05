@@ -53,7 +53,7 @@ public class CategoriesInnerActivity extends AppCompatActivity {
             switch (categoryId) {
                 case 1:
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    sectionsRef = db.collection("/Categories/Carl/Sections");
+                    sectionsRef = db.collection("/Categories/Kirby/Sections");
                     break;
                 case 2:
                     db = FirebaseFirestore.getInstance();
@@ -61,7 +61,7 @@ public class CategoriesInnerActivity extends AppCompatActivity {
                     break;
                 case 3:
                     db = FirebaseFirestore.getInstance();
-                    sectionsRef = db.collection("/Categories/Kirby/Sections");
+                    sectionsRef = db.collection("/Categories/Carl/Sections");
                     break;
             }
         }

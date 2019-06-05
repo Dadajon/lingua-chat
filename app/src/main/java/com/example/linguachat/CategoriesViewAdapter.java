@@ -1,17 +1,20 @@
 package com.example.linguachat;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,40 +39,92 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
         Glide.with(mCtx)
                 .load(model.getCard_bg())
                 .into(holder.categoryImage);
+
+        if (model.isIs_started() && !model.isIs_inprogress()) {
+            holder.btnText.setText(R.string.start_conversation);
+            holder.isCategoryLocked.setVisibility(View.GONE);
+            holder.isCategoryBtnLocked.setVisibility(View.GONE);
+        } else if (model.isIs_inprogress() && !model.isIs_completed()) {
+            holder.btnText.setText(R.string.continue_talking);
+            holder.progressBar.setVisibility(View.VISIBLE);
+            // TODO! Set ProgressBar status
+            holder.isCategoryLocked.setVisibility(View.GONE);
+            holder.isCategoryBtnLocked.setVisibility(View.GONE);
+        } else if (model.isIs_completed()) {
+            holder.btnText.setText(R.string.review);
+            holder.isCategoryLocked.setVisibility(View.GONE);
+            holder.isCategoryBtnLocked.setVisibility(View.GONE);
+        } else {
+            holder.isCategoryLocked.setVisibility(View.VISIBLE);
+            holder.isCategoryBtnLocked.setVisibility(View.VISIBLE);
+        }
+
         holder.categoryDesc.setText(model.getCard_desc());
         holder.categoryLevel.setText(model.getCard_level());
         holder.categoryTitle.setText(model.getCard_title());
         final int color = Color.parseColor(model.getCard_color());
         holder.card.setCardBackgroundColor(color);
         holder.startBtn.setCardBackgroundColor(color);
-        String pageNumber = model.getId()+"/11";
+        String pageNumber = model.getId() + "/11";
         holder.categoryNumber.setText(pageNumber);
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
-                intent.putExtra("category_bg", model.getCard_bg());
-                intent.putExtra("category_desc", model.getCard_desc());
-                intent.putExtra("category_level", model.getCard_level());
-                intent.putExtra("category_title", model.getCard_title());
-                intent.putExtra("category_color", color);
-                intent.putExtra("category_id", model.getId());
-                mCtx.startActivity(intent);
+                if (!model.isIs_started()) {
+                    Toast.makeText(mCtx, "Sorry, LOCKED", Toast.LENGTH_SHORT).show();
+
+                    final Dialog dialog = new Dialog(mCtx);
+                    // Include dialog.xml file
+                    dialog.setContentView(R.layout.locked_dialog);
+                    // Set dialog title
+                    dialog.setTitle(R.string.level_locked);
+
+                    // set values for custom dialog components - text, image and button
+                    TextView text = dialog.findViewById(R.id.textDialog);
+                    text.setText(R.string.unlock_instructions);
+                    ImageView image = dialog.findViewById(R.id.imageDialog);
+                    image.setImageResource(R.drawable.googleg_standard_color_18);
+
+                    dialog.show();
+
+                    Button okButton = dialog.findViewById(R.id.okButton);
+                    // if decline button is clicked, close the custom dialog
+                    okButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Close dialog
+                            dialog.dismiss();
+                        }
+                    });
+                } else {
+                    Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
+                    intent.putExtra("category_bg", model.getCard_bg());
+                    intent.putExtra("category_desc", model.getCard_desc());
+                    intent.putExtra("category_level", model.getCard_level());
+                    intent.putExtra("category_title", model.getCard_title());
+                    intent.putExtra("category_color", color);
+                    intent.putExtra("category_id", model.getId());
+                    mCtx.startActivity(intent);
+                }
             }
         });
 
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
-                intent.putExtra("category_bg", model.getCard_bg());
-                intent.putExtra("category_desc", model.getCard_desc());
-                intent.putExtra("category_level", model.getCard_level());
-                intent.putExtra("category_title", model.getCard_title());
-                intent.putExtra("category_color", color);
-                intent.putExtra("category_id", model.getId());
-                mCtx.startActivity(intent);
+                if (!model.isIs_started()) {
+                    Toast.makeText(mCtx, "Sorry, LOCKED", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
+                    intent.putExtra("category_bg", model.getCard_bg());
+                    intent.putExtra("category_desc", model.getCard_desc());
+                    intent.putExtra("category_level", model.getCard_level());
+                    intent.putExtra("category_title", model.getCard_title());
+                    intent.putExtra("category_color", color);
+                    intent.putExtra("category_id", model.getId());
+                    mCtx.startActivity(intent);
+                }
             }
         });
 
@@ -88,14 +143,17 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
     }
 
     class CategoriesHolder extends RecyclerView.ViewHolder {
-        ImageView categoryImage;
-        TextView categoryTitle, categoryDesc, categoryLevel, categoryNumber;
+        ImageView categoryImage, isCategoryLocked, isCategoryBtnLocked;
+        TextView categoryTitle, categoryDesc, categoryLevel, categoryNumber, btnText;
         RelativeLayout pLayout;
         CardView card, startBtn;
+        ProgressBar progressBar;
 
         CategoriesHolder(@NonNull View itemView) {
             super(itemView);
             categoryImage = itemView.findViewById(R.id.card_bg);
+            isCategoryLocked = itemView.findViewById(R.id.is_category_locked);
+            isCategoryBtnLocked = itemView.findViewById(R.id.is_category_btn_locked);
             categoryTitle = itemView.findViewById(R.id.card_title);
             categoryDesc = itemView.findViewById(R.id.card_desc);
             categoryLevel = itemView.findViewById(R.id.card_level);
@@ -103,6 +161,10 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
             pLayout = itemView.findViewById(R.id.pLayout);
             card = itemView.findViewById(R.id.parentLayout);
             startBtn = itemView.findViewById(R.id.start_conversation_btn);
+            btnText = itemView.findViewById(R.id.card_btn);
+            progressBar = itemView.findViewById(R.id.category_progress);
         }
     }
+
+
 }

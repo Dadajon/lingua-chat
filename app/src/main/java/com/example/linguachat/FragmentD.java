@@ -48,19 +48,19 @@ public class FragmentD extends Fragment {
             //user has already signed in
             Log.d("AUTH", mAuth.getCurrentUser().getEmail());
 
-            user.sendEmailVerification()
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "EmailVerification successfully sent!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error sending EmailVerification", e);
-                        }
-                    });
+//            user.sendEmailVerification()
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                            Log.d(TAG, "EmailVerification successfully sent!");
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Log.w(TAG, "Error sending EmailVerification", e);
+//                        }
+//                    });
 
             for (UserInfo profile : user.getProviderData()) {
                 // Id of the provider (ex: google.com)

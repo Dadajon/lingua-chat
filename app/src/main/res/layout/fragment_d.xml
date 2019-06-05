@@ -5,22 +5,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.linguachat.FragmentD">
 
-    <!--&lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
-    <!--<ImageView-->
-    <!--android:layout_width="200dp"-->
-    <!--android:layout_height="200dp"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:src="@drawable/ic_hotel_black_24dp" />-->
-
-    <!--<Button-->
-    <!--android:id="@+id/profile"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:text="@string/profile" />-->
-
-
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -77,12 +61,12 @@
                 android:id="@+id/profileResetPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@id/profileLogout"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_above="@id/profileLogout"
-                android:text="@string/reset_password"/>
+                android:text="@string/reset_password" />
 
             <Button
                 android:id="@+id/profileLogout"

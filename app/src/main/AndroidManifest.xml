@@ -15,11 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SectionsActivity"></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -27,6 +25,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".CategoriesInnerActivity" />
+        <activity android:name=".SectionsActivity"/>
     </application>
 
 </manifest>

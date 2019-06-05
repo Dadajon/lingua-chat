@@ -24,6 +24,8 @@
     <string name="kirby">Kirby</string>
     <string name="desc">Desc</string>
     <string name="start_conversation">Start Conversation</string>
+    <string name="review">Review</string>
+    <string name="continue_talking">Continue Talking</string>
     <string name="level">Level</string>
     <string name="category_image">category image</string>
     <string name="card_number">1/11</string>
@@ -32,6 +34,11 @@
     <string name="logout">Logout</string>
     <string name="reset_password">Reset Password</string>
     <string name="delete">Delete</string>
+    
+    <!-- Locked Dialog Fragment -->
+    <string name="level_locked">Level locked!</string>
+    <string name="unlock_instructions">Finish the previous level talk to this character.</string>
+    <string name="ok_btn">Ok</string>
 
 
 </resources>
