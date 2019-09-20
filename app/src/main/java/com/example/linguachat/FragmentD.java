@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,11 +36,14 @@ public class FragmentD extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference categoriesRef = db.collection("Categories");
+    final DocumentReference usersRef = db.document("Users/dadajonjurakuziev@gmail.com");
     private String profile_providerId, profile_name, profile_email;
     Uri profile_photoUrl;
 
     //layout vars
-    TextView profileProvider, profileName, profileEmail;
+    TextView profileProvider, profileName, profileEmail, sentences_spoken, concepts_learned, days_practiced, longest_streaks;
     CircleImageView profilePhoto;
     Button resetPassword, logoutButton, deleteButton;
 
@@ -64,7 +74,7 @@ public class FragmentD extends Fragment {
 
             for (UserInfo profile : user.getProviderData()) {
                 // Id of the provider (ex: google.com)
-                profile_providerId = profile.getProviderId();
+//                profile_providerId = profile.getProviderId();
 
                 // Name, email address, and profile photo Url
                 profile_name = profile.getDisplayName();
@@ -81,19 +91,45 @@ public class FragmentD extends Fragment {
         }
 
         profilePhoto = view.findViewById(R.id.profilePhoto);
-        profileProvider = view.findViewById(R.id.profileProvider);
         profileName = view.findViewById(R.id.profileName);
         profileEmail = view.findViewById(R.id.profileEmail);
         resetPassword = view.findViewById(R.id.profileResetPassword);
         logoutButton = view.findViewById(R.id.profileLogout);
         deleteButton = view.findViewById(R.id.profileDelete);
 
+        sentences_spoken = view.findViewById(R.id.sentences_spoken);
+        concepts_learned = view.findViewById(R.id.concepts_learned);
+        days_practiced = view.findViewById(R.id.days_practiced);
+        longest_streaks = view.findViewById(R.id.longest_streak);
+
+
         Glide.with(this)
                 .load(profile_photoUrl)
                 .into(profilePhoto);
-        profileProvider.setText(profile_providerId);
         profileName.setText(profile_name);
         profileEmail.setText(profile_email);
+
+        usersRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+//                    sentences_spoken.setText(snapshot.get("sentences_spoken").toString());
+                    concepts_learned.setText(snapshot.get("concepts_learned").toString());
+                    days_practiced.setText(snapshot.get("days_practiced").toString());
+                    longest_streaks.setText(snapshot.get("longest_streak").toString());
+
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
 
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override

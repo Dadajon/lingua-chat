@@ -12,14 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class FragmentA extends Fragment {
+    private static final String TAG = "FragmentA";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference categoriesRef = db.collection("Categories");
+    final DocumentReference usersRef = db.document("Users/dadajonjurakuziev@gmail.com");
     private CategoriesViewAdapter adapter;
     View view;
     RecyclerView recyclerView;
@@ -29,6 +39,35 @@ public class FragmentA extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_a, container, false);
+
+        usersRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                assert document != null;
+                ArrayList<String> completed_categories_array = (ArrayList<String>) document.get("completed_categories");
+                ArrayList<String> inprogress_categories_array = (ArrayList<String>) document.get("inprogress_categories");
+
+                Log.d("myTag", String.valueOf(completed_categories_array));
+                Map<String, Object> completedData = new HashMap<>();
+                completedData.put("is_completed", true);
+
+                Map<String, Object> inprogressData = new HashMap<>();
+                inprogressData.put("is_inprogress", true);
+
+//                if (completed_categories_array !=null){
+//                    if (completed_categories_array.get(0).equals("Kirby")) {
+//                        categoriesRef.document("Kirby").update(completedData);
+//                    }
+//                }
+
+                if (inprogress_categories_array != null){
+                    if (inprogress_categories_array.get(0).equals("Kirby")){
+                        categoriesRef.document("Kirby").update(inprogressData);
+                    }
+                }
+            }
+        });
 
         Query query = categoriesRef.orderBy("id", Query.Direction.ASCENDING);
 

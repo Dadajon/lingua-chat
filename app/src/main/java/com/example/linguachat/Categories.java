@@ -10,13 +10,14 @@ public class Categories {
     private boolean is_completed;
     private boolean is_inprogress;
     private boolean is_started;
+    private int progress;
 
     public Categories() {
         //empty constructor needed
     }
 
     public Categories(String card_bg, String card_color, String card_desc, String card_level, String card_title, int id,
-                      boolean is_completed, boolean is_inprogress, boolean is_started) {
+                      boolean is_completed, boolean is_inprogress, boolean is_started, int progress) {
         this.card_bg = card_bg;
         this.card_color = card_color;
         this.card_desc = card_desc;
@@ -26,6 +27,7 @@ public class Categories {
         this.is_completed = is_completed;
         this.is_inprogress = is_inprogress;
         this.is_started = is_started;
+        this.progress = progress;
     }
 
     String getCard_bg() {
@@ -63,6 +65,8 @@ public class Categories {
     public boolean isIs_started() {
         return is_started;
     }
+
+    public int getProgress() { return progress; }
 }
 
 

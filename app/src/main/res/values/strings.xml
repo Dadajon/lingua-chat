@@ -2,9 +2,9 @@
     <string name="app_name">LinguaChat</string>
 
     //Facebook
-    <string name="facebook_application_id" translatable="false">818528711814724</string>
+    <string name="facebook_application_id" translatable="false">YOUR_FACEBOOK_APPLICATION_ID</string>
     <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
-    <string name="facebook_login_protocol_scheme" translatable="false">fb818528711814724</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">YOUR_FACEBOOK_LOGIN_PROTOCOL_SCHEME</string>
 
     //Twitter
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
@@ -31,7 +31,7 @@
     <string name="card_number">1/11</string>
     <string name="sections">Sections</string>
     <string name="section_id">1 :</string>
-    <string name="logout">Logout</string>
+    <string name="logout">Sign out</string>
     <string name="reset_password">Reset Password</string>
     <string name="delete">Delete</string>
     
@@ -39,6 +39,17 @@
     <string name="level_locked">Level locked!</string>
     <string name="unlock_instructions">Finish the previous level talk to this character.</string>
     <string name="ok_btn">Ok</string>
+    <string name="profile_title">Profile</string>
+    <string name="_21">21</string>
+    <string name="sentences_spoken">Sentences spoken</string>
+    <string name="concepts_learned">Concepts learned</string>
+    <string name="days_practiced">Days practiced</string>
+    <string name="longest_streak">Longest streak (Days)</string>
+    <string name="singles">Singles</string>
+    <string name="review_concepts">Review Concepts</string>
+    <string name="_2_concepts_added">2 concepts added</string>
+    <string name="example_concepts">Example Concepts</string>
+    <string name="welcome_to_the_app">Welcome to the app</string>
 
 
 </resources>

@@ -27,9 +27,9 @@ public class SliderAdapter extends PagerAdapter {
     };
 
     public String[] slide_headings = {
-            "EAT",
-            "SLEEP",
-            "CODE"
+            "Record in person",
+            "Speak",
+            "Let A.I. compile your records"
     };
 
     public String[] slide_descs = {

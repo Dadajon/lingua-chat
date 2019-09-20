@@ -1,9 +1,7 @@
 package com.example.linguachat;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -17,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.common.ChangeEventType;
@@ -47,13 +44,15 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
         } else if (model.isIs_inprogress() && !model.isIs_completed()) {
             holder.btnText.setText(R.string.continue_talking);
             holder.progressBar.setVisibility(View.VISIBLE);
-            // TODO! Set ProgressBar status
+            holder.progressBar.setProgress(10);
             holder.isCategoryLocked.setVisibility(View.GONE);
             holder.isCategoryBtnLocked.setVisibility(View.GONE);
         } else if (model.isIs_completed()) {
             holder.btnText.setText(R.string.review);
             holder.isCategoryLocked.setVisibility(View.GONE);
             holder.isCategoryBtnLocked.setVisibility(View.GONE);
+            holder.progressBar.setVisibility(View.VISIBLE);
+            holder.progressBar.setProgress(100);
         } else {
             holder.isCategoryLocked.setVisibility(View.VISIBLE);
             holder.isCategoryBtnLocked.setVisibility(View.VISIBLE);
@@ -72,31 +71,7 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
             @Override
             public void onClick(View v) {
                 if (!model.isIs_started()) {
-                    Toast.makeText(mCtx, "Sorry, LOCKED", Toast.LENGTH_SHORT).show();
-
-                    final Dialog dialog = new Dialog(mCtx);
-                    // Include dialog.xml file
-                    dialog.setContentView(R.layout.locked_dialog);
-                    // Set dialog title
-                    dialog.setTitle(R.string.level_locked);
-
-                    // set values for custom dialog components - text, image and button
-                    TextView text = dialog.findViewById(R.id.textDialog);
-                    text.setText(R.string.unlock_instructions);
-                    ImageView image = dialog.findViewById(R.id.imageDialog);
-                    image.setImageResource(R.drawable.googleg_standard_color_18);
-
-                    dialog.show();
-
-                    Button okButton = dialog.findViewById(R.id.okButton);
-                    // if decline button is clicked, close the custom dialog
-                    okButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Close dialog
-                            dialog.dismiss();
-                        }
-                    });
+                    dialogMessage();
                 } else {
                     Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
                     intent.putExtra("category_bg", model.getCard_bg());
@@ -114,7 +89,7 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
             @Override
             public void onClick(View v) {
                 if (!model.isIs_started()) {
-                    Toast.makeText(mCtx, "Sorry, LOCKED", Toast.LENGTH_SHORT).show();
+                    dialogMessage();
                 } else {
                     Intent intent = new Intent(mCtx, CategoriesInnerActivity.class);
                     intent.putExtra("category_bg", model.getCard_bg());
@@ -128,6 +103,33 @@ public class CategoriesViewAdapter extends FirestoreRecyclerAdapter<Categories, 
             }
         });
 
+    }
+
+    private void dialogMessage() {
+        final Dialog dialog = new Dialog(mCtx);
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.locked_dialog);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        View v = dialog.getWindow().getDecorView();
+        v.setBackgroundResource(android.R.color.transparent);
+        // Set dialog title
+        dialog.setTitle(R.string.level_locked);
+
+        // set values for custom dialog components - text, image and button
+        TextView text = dialog.findViewById(R.id.textDialog);
+        text.setText(R.string.unlock_instructions);
+
+        dialog.show();
+
+        Button okButton = dialog.findViewById(R.id.okButton);
+        // if decline button is clicked, close the custom dialog
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Close dialog
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override

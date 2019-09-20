@@ -1,9 +1,9 @@
 package com.example.linguachat;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
